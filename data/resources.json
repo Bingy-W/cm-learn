@@ -39,19 +39,6 @@
     "updatedAt": "2025-11-13"
   },
   {
-    "id": "numerical-recipes",
-    "title": "Numerical Recipes 在线资源",
-    "category": "math",
-    "subCategory": "numerical-methods",
-    "type": "doc",
-    "tags": ["数值方法","积分","插值"],
-    "language": "en",
-    "url": "https://numerical.recipes/",
-    "description": "经典数值算法资料，覆盖积分、插值、求解器等",
-    "difficulty": "⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
     "id": "matrix-calculator",
     "title": "Matrix Calculator 在线矩阵工具",
     "category": "tool",
@@ -169,32 +156,6 @@
     "updatedAt": "2025-11-13"
   },
   {
-    "id": "hughes-fem-book",
-    "title": "Hughes《有限元方法》经典教材",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "doc",
-    "tags": ["Thomas Hughes","线性静态分析","动态分析"],
-    "language": "en",
-    "url": "https://www.amazon.com/Finite-Element-Method-Mechanical-Engineering/dp/0486411818",
-    "description": "Hughes经典教材，涵盖线性与动态有限元分析的理论基础",
-    "difficulty": "⭐⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zienkiewicz-fem-book",
-    "title": "Zienkiewicz《有限元方法》第8版",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "doc",
-    "tags": ["O.C. Zienkiewicz","有限元基础","板壳理论"],
-    "language": "en",
-    "url": "https://shop.elsevier.com/books/the-finite-element-method/zienkiewicz/978-0-443-16044-8",
-    "description": "有限元方法奠基人Zienkiewicz的经典教材，全面覆盖有限元理论基础",
-    "difficulty": "⭐⭐⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
     "id": "tensor-calculus-dullemond",
     "title": "Dullemond张量计算讲义",
     "category": "math",
@@ -218,19 +179,6 @@
     "url": "https://polcz.itk.ppke.hu/files/targyak/anal3/konyvek/Pavel_Grinfeld_Tensor_analysis.pdf",
     "description": "Grinfeld张量分析教材，深入讨论张量微积分与变分法在连续介质力学中的应用",
     "difficulty": "⭐⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "strang-cse-book",
-    "title": "Strang《计算科学与工程》",
-    "category": "math",
-    "subCategory": "computational-mathematics",
-    "type": "doc",
-    "tags": ["Gilbert Strang","有限差分法","Krylov方法"],
-    "language": "en",
-    "url": "https://www.amazon.com/Computational-Science-Engineering-Gilbert-Strang/dp/0961408812",
-    "description": "Strang教授计算数学教材，涵盖有限差分法、Krylov子空间方法、多重网格法",
-    "difficulty": "⭐⭐⭐",
     "updatedAt": "2025-11-13"
   },
   {
@@ -390,121 +338,4 @@
     "updatedAt": "2025-11-13"
   }
   ,
-  {
-    "id": "zh-fea-swjtu-fem-basic",
-    "title": "西南交通大学《有限元基础》",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "video",
-    "tags": ["有限元","中文课程","弹性力学","数值积分"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/spoc/course/SWJTU-1451208166",
-    "description": "中文授课的有限元基础课程，系统讲解有限元法的理论与实现，含教材与参考资料。",
-    "difficulty": "⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-fea-mooc-fem-foundation",
-    "title": "中国大学MOOC《有限元基础》课程页",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "video",
-    "tags": ["有限元","中文课程","理论基础"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/course/detail.htm?cid=1451208166",
-    "description": "有限元法基本理论与列式方法的中文课程页面，包含教材与参考书信息。",
-    "difficulty": "⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-fea-czu-fem-software",
-    "title": "常州工学院《有限元法与软件应用》",
-    "category": "fea-theory",
-    "subCategory": "software-application",
-    "type": "video",
-    "tags": ["ANSYS","MATLAB","中文课程","建模"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/spoc/course/CZU-1207561804",
-    "description": "实践性中文课程，结合ANSYS与MATLAB演示有限元建模与分析流程。",
-    "difficulty": "⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-fea-mooc-fem-apply",
-    "title": "《有限元分析与应用》课程聚合",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "doc",
-    "tags": ["课程聚合","中文课程","有限元"],
-    "language": "zh",
-    "url": "https://www.mooc.cn/course/4987.html",
-    "description": "课程介绍与教学目标，强调工程背景与物理概念，含MATLAB演示与ANSYS建模。",
-    "difficulty": "⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-fea-cmooc-fem-apply",
-    "title": "《有限元分析与应用》聚合（CMOOC）",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "doc",
-    "tags": ["课程聚合","中文课程","有限元"],
-    "language": "zh",
-    "url": "https://www.cmooc.com/course/4987.html",
-    "description": "《有限元分析与应用》课程聚合页面，提供课程概述与相关资源导航。",
-    "difficulty": "⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-book-wang-xucheng-fem",
-    "title": "王勖成《有限单元法》",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "book",
-    "tags": ["中文教材","有限元基础"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/spoc/course/SWJTU-1451208166",
-    "description": "中文经典教材，系统阐述有限单元法的理论基础、单元构造与收敛性。",
-    "difficulty": "⭐⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-book-zeng-pan-fem-app",
-    "title": "曾攀《有限元分析及应用》",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "book",
-    "tags": ["中文教材","应用实例"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/course/detail.htm?cid=1451208166",
-    "description": "面向工程应用的中文教材，以实例讲解有限元建模与求解方法。",
-    "difficulty": "⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-book-cook-concepts-zh",
-    "title": "《有限元分析的概念与应用》（中文译本）",
-    "category": "fea-theory",
-    "subCategory": "finite-element-method",
-    "type": "book",
-    "tags": ["中文教材","Cook译本"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/spoc/course/SWJTU-1451208166",
-    "description": "经典教材的中文译本，覆盖有限元分析的基本概念与应用场景。",
-    "difficulty": "⭐⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  },
-  {
-    "id": "zh-book-elasticity-chinese",
-    "title": "《弹性力学（中文教材）》",
-    "category": "math",
-    "subCategory": "elasticity",
-    "type": "book",
-    "tags": ["中文教材","弹性力学"],
-    "language": "zh",
-    "url": "https://www.icourse163.org/spoc/course/SWJTU-1451208166",
-    "description": "弹性力学中文教材参考，作为有限元理论学习的力学基础。",
-    "difficulty": "⭐⭐⭐",
-    "updatedAt": "2025-11-13"
-  }
 ]
