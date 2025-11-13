@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>形函数生成器 - 计算力学学习平台</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="../css/style-new.css?v=20251113-3" rel="stylesheet">
+  <style>
+    .tool-input {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      font-weight: 500;
+    }
+    .tool-input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+    .tool-input:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    .result-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .tool-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+    }
+    .range-slider {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      height: 8px;
+    }
+    .range-slider::-webkit-slider-thumb {
+      background: var(--primary-color);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-cpu"></i> 计算力学导航
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="../resources/math-foundations.html">数学基础</a></li>
+          <li class="nav-item"><a class="nav-link" href="../resources/fea-theory.html">有限元理论</a></li>
+          <li class="nav-item"><a class="nav-link" href="../resources/programming.html">编程实现</a></li>
+          <li class="nav-item"><a class="nav-link" href="../resources/software-tools.html">开源软件</a></li>
+          <li class="nav-item"><a class="nav-link" href="../resources/learning-path.html">学习路径</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">在线工具</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="matrix-calculator.html">矩阵计算器</a></li>
+              <li><a class="dropdown-item" href="bar-stiffness.html">1D杆刚度矩阵</a></li>
+              <li><a class="dropdown-item active" href="shape-functions.html">形函数生成器</a></li>
+              <li><a class="dropdown-item" href="gauss-integration.html">高斯积分点</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input id="search-input" class="form-control me-2" type="search" placeholder="搜索资源关键词" aria-label="Search">
+          <button class="btn btn-outline-light" type="button" onclick="onSearch()">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header-section">
+    <div class="container">
+      <div class="row align-items-center min-vh-50">
+        <div class="col-lg-8">
+          <div class="page-header-content animate-fade-in-up">
+            <h1 class="display-5 fw-bold text-white mb-3">
+              <i class="bi bi-bezier text-gradient me-3"></i>
+              形函数生成器
+            </h1>
+            <p class="lead text-white-50 mb-4">
+              计算1D线性元和2D三角形线性元的形函数值，支持参数化调节
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="../index.html" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> 返回首页
+              </a>
+              <a href="../resources/fea-theory.html" class="btn btn-light">
+                <i class="bi bi-book"></i> 有限元理论
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="page-header-visual animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="floating-card">
+              <div class="card p-4 mb-3">
+                <h5 class="text-gradient mb-2">📐 形函数计算</h5>
+                <p class="text-muted mb-0">1D线性 · 2D三角 · 参考单元</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容区域 -->
+  <div class="main-content-section tool-contrast-dark">
+    <div class="container">
+      <div class="row g-4">
+        <!-- 1D线性元 -->
+        <div class="col-lg-6">
+          <div class="card tool-card animate-fade-in-up">
+            <div class="card-body p-4">
+              <div class="text-center mb-4">
+                <h4 class="text-white mb-3">
+                  <i class="bi bi-graph-up text-gradient me-2"></i>
+                  1D形函数
+                </h4>
+                <p class="text-white-50">支持线性 P1 与二次 P2</p>
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-text">阶次</span>
+                    <select id="order1d" class="form-select tool-input"><option value="P1" selected>P1</option><option value="P2">P2</option></select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="text-white mb-2">ξ (-1 到 1)</label>
+                  <input id="xi" type="range" min="-1" max="1" value="0" step="0.01" class="form-range range-slider">
+                  <div class="text-center mt-2"><span class="badge bg-primary">ξ = <span id="xi-value">0.00</span></span></div>
+                </div>
+              </div>
+
+              <div class="result-card p-3 rounded-3">
+                <h6 class="text-gradient mb-2">计算结果</h6>
+                <div id="sf1d" class="text-white-50 small"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 2D三角形线性元 -->
+        <div class="col-lg-6">
+          <div class="card tool-card animate-fade-in-up" style="animation-delay: 0.1s;">
+            <div class="card-body p-4">
+              <div class="text-center mb-4">
+                <h4 class="text-white mb-3">
+                  <i class="bi bi-triangle text-gradient me-2"></i>
+                  2D三角形线性元
+                </h4>
+                <p class="text-white-50">计算2D三角形形函数</p>
+              </div>
+              
+              <div class="mb-3">
+                <label class="text-white mb-2">参数 ξ (0 到 1)</label>
+                <input id="xi2" type="range" min="0" max="1" value="0.33" step="0.01" class="form-range range-slider">
+                <div class="text-center mt-2">
+                  <span class="badge bg-primary">ξ = <span id="xi2-value">0.33</span></span>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="text-white mb-2">参数 η (0 到 1)</label>
+                <input id="eta2" type="range" min="0" max="1" value="0.33" step="0.01" class="form-range range-slider">
+                <div class="text-center mt-2">
+                  <span class="badge bg-primary">η = <span id="eta2-value">0.33</span></span>
+                </div>
+              </div>
+              
+              <div class="result-card p-3 rounded-3">
+                <h6 class="text-gradient mb-2">计算结果</h6>
+                <div id="sftri" class="text-white-50 small"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  function shape1D_P1(xi){
+    const N1=(1-xi)/2; const N2=(1+xi)/2; const dN1=-0.5; const dN2=0.5; return {N:[N1,N2],dN:[dN1,dN2]};
+  }
+  function shape1D_P2(xi){
+    const N1=xi*(xi-1)/2; const N2=1-xi*xi; const N3=xi*(xi+1)/2; const dN1=(2*xi-1)/2; const dN2=-2*xi; const dN3=(2*xi+1)/2; return {N:[N1,N2,N3],dN:[dN1,dN2,dN3]};
+  }
+  function shapeTri(xi,eta){
+    const z=1-xi-eta; const N1=xi; const N2=eta; const N3=z;
+    return {N:[N1,N2,N3]};
+  }
+  function update1D(){
+    const xi=parseFloat(document.getElementById('xi').value);
+    const ord=document.getElementById('order1d').value;
+    const s=ord==='P2'?shape1D_P2(xi):shape1D_P1(xi);
+    document.getElementById('xi-value').textContent=xi.toFixed(2);
+    if(ord==='P1'){
+      document.getElementById('sf1d').innerHTML=`<div class="row g-2"><div class="col-6"><strong class="text-white">形函数</strong><br>N₁=${s.N[0].toFixed(4)}<br>N₂=${s.N[1].toFixed(4)}</div><div class="col-6"><strong class="text-white">导数</strong><br>dN₁/dξ=${s.dN[0].toFixed(2)}<br>dN₂/dξ=${s.dN[1].toFixed(2)}</div></div>`;
+    } else {
+      document.getElementById('sf1d').innerHTML=`<div class="row g-2"><div class="col-6"><strong class="text-white">形函数</strong><br>N₁=${s.N[0].toFixed(4)}<br>N₂=${s.N[1].toFixed(4)}<br>N₃=${s.N[2].toFixed(4)}</div><div class="col-6"><strong class="text-white">导数</strong><br>dN₁/dξ=${s.dN[0].toFixed(2)}<br>dN₂/dξ=${s.dN[1].toFixed(2)}<br>dN₃/dξ=${s.dN[2].toFixed(2)}</div></div>`;
+    }
+  }
+  function updateTri(){
+    const xi=parseFloat(document.getElementById('xi2').value);
+    const eta=parseFloat(document.getElementById('eta2').value);
+    document.getElementById('xi2-value').textContent = xi.toFixed(2);
+    document.getElementById('eta2-value').textContent = eta.toFixed(2);
+    
+    if(xi+eta>1){
+      document.getElementById('sftri').innerHTML='<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>超出参考单元范围</div>';
+      return;
+    }
+    const s=shapeTri(xi,eta);
+    document.getElementById('sftri').innerHTML=`
+      <div class="row g-2">
+        <div class="col-4 text-center">
+          <strong class="text-white">N₁</strong><br>
+          <span class="h6 text-gradient">${s.N[0].toFixed(4)}</span>
+        </div>
+        <div class="col-4 text-center">
+          <strong class="text-white">N₂</strong><br>
+          <span class="h6 text-gradient">${s.N[1].toFixed(4)}</span>
+        </div>
+        <div class="col-4 text-center">
+          <strong class="text-white">N₃</strong><br>
+          <span class="h6 text-gradient">${s.N[2].toFixed(4)}</span>
+        </div>
+      </div>
+      <div class="text-center mt-2">
+        <small class="text-white-50">ξ=${xi.toFixed(2)}, η=${eta.toFixed(2)}</small>
+      </div>
+    `;
+  }
+  
+  function onSearch() {
+    const searchTerm = document.getElementById('search-input').value.trim();
+    if (searchTerm) {
+      window.location.href = `../resources/?q=${encodeURIComponent(searchTerm)}`;
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded',()=>{update1D();updateTri(); document.getElementById('order1d').addEventListener('change',update1D);});
+  document.getElementById('xi').addEventListener('input',update1D);
+  document.getElementById('xi2').addEventListener('input',updateTri);
+  document.getElementById('eta2').addEventListener('input',updateTri);
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

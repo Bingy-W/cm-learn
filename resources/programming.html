@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>编程实现资源 - 计算力学学习平台</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="../css/style-new.css?v=20251113-2" rel="stylesheet">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="main-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-cpu"></i> 计算力学导航
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="math-foundations.html">数学基础</a></li>
+          <li class="nav-item"><a class="nav-link" href="fea-theory.html">有限元理论</a></li>
+          <li class="nav-item"><a class="nav-link active" href="programming.html">编程实现</a></li>
+          <li class="nav-item"><a class="nav-link" href="software-tools.html">开源软件</a></li>
+          <li class="nav-item"><a class="nav-link" href="learning-path.html">学习路径</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">在线工具</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="../tools/matrix-calculator.html">矩阵计算器</a></li>
+              <li><a class="dropdown-item" href="../tools/bar-stiffness.html">1D杆刚度矩阵</a></li>
+              <li><a class="dropdown-item" href="../tools/shape-functions.html">形函数生成器</a></li>
+              <li><a class="dropdown-item" href="../tools/gauss-integration.html">高斯积分点</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input id="search-input" class="form-control me-2" type="search" placeholder="搜索资源关键词" aria-label="Search">
+          <button class="btn btn-outline-light" type="button" onclick="onSearch()">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header-section">
+    <div class="container">
+      <div class="row align-items-center min-vh-50">
+        <div class="col-lg-8">
+          <div class="page-header-content animate-fade-in-up">
+            <h1 class="display-5 fw-bold text-white mb-3">
+              <i class="bi bi-code-slash text-gradient me-3"></i>
+              编程实现资源
+            </h1>
+            <p class="lead text-white-50 mb-4">
+              Python科学计算、有限元程序示例、网格生成与后处理、开源软件应用
+            </p>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="../index.html" class="btn btn-outline-light">
+                <i class="bi bi-arrow-left"></i> 返回首页
+              </a>
+              <a href="learning-path.html" class="btn btn-light">
+                <i class="bi bi-map"></i> 学习路径
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="page-header-visual animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="floating-card">
+              <div class="card p-4 mb-3">
+                <h5 class="text-gradient mb-2">💻 编程实践领域</h5>
+                <p class="text-muted mb-0">Python · NumPy · SciPy · FEniCS · 网格处理</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主要内容区域 -->
+  <div class="main-content-section">
+    <div class="container">
+      <!-- 搜索和过滤区域 -->
+      <div class="search-area mb-5 animate-fade-in-up">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <div class="search-box">
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input id="q" class="form-control form-control-lg" placeholder="搜索编程资源，如：Python、FEniCS、NumPy、网格生成...">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="resource-stats text-center">
+              <div class="stat-item">
+                <div class="stat-number text-gradient" id="resource-count">0</div>
+                <div class="stat-label">精选资源</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 资源列表 -->
+      <div id="list" class="row g-4"></div>
+    </div>
+  </div>
+  
+  <script>
+  async function load(){
+    const res=await fetch('../data/resources.json');
+    const data=await res.json();
+    const items=data.filter(x=>x.category==='programming'||x.category==='software'||x.category==='tool');
+    render(items);
+    const urlQ=new URLSearchParams(location.search).get('q');
+    if(urlQ){document.getElementById('q').value=urlQ;filter();}
+    
+    // 更新资源计数
+    document.getElementById('resource-count').textContent = items.length;
+  }
+  
+  function render(items){
+    const list=document.getElementById('list');
+    list.innerHTML=items.map(item=>`
+      <div class="col-sm-6 col-lg-4 animate-fade-in-up">
+        <div class="card resource-card h-100">
+          <div class="card-body">
+            <div class="resource-header mb-3">
+              <h5 class="card-title mb-2">${item.title}</h5>
+              <div class="resource-meta">
+                <span class="badge bg-primary me-2">${item.type}</span>
+                <span class="badge bg-secondary">${item.language}</span>
+              </div>
+            </div>
+            <p class="card-text">${item.description||''}</p>
+            <div class="resource-tags mb-3">
+              ${(item.tags||[]).map(tag => `<span class="badge-custom">${tag}</span>`).join('')}
+            </div>
+            <div class="resource-footer">
+              <div class="difficulty-indicator mb-2">
+                <span class="text-muted">难度：</span>
+                ${getDifficultyStars(item.difficulty)}
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">更新：${new Date(item.updatedAt).toLocaleDateString()}</small>
+                <a class="btn btn-primary btn-sm" target="_blank" href="${item.url}">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>访问资源
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  function getDifficultyStars(difficulty) {
+    const level = Math.min(5, Math.max(1, difficulty || 3));
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      stars += i <= level ? '<i class="bi bi-star-fill text-warning"></i>' : '<i class="bi bi-star text-muted"></i>';
+    }
+    return stars;
+  }
+  
+  async function filter(){
+    const q=document.getElementById('q').value.trim().toLowerCase();
+    const res=await fetch('../data/resources.json');
+    const data=await res.json();
+    const items=data.filter(x=>x.category==='programming'||x.category==='software'||x.category==='tool').filter(x=>{
+      const s=[x.title,x.description,(x.tags||[]).join(' ')].join(' ').toLowerCase();
+      return s.includes(q);
+    });
+    render(items);
+    
+    // 更新资源计数
+    document.getElementById('resource-count').textContent = items.length;
+  }
+  
+  function onSearch() {
+    const searchTerm = document.getElementById('search-input').value.trim();
+    if (searchTerm) {
+      window.location.href = `?q=${encodeURIComponent(searchTerm)}`;
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded',load);
+  document.getElementById('q').addEventListener('input',filter);
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

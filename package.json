@@ -1,0 +1,9 @@
+{
+  "name": "cm-learn-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/blob": "^0.20.0"
+  }
+}

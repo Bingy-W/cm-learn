@@ -1,0 +1,8 @@
+body{background:#fafafa}
+.card-text{min-height:64px}
+.matrix-display{font-family:monospace;white-space:pre-line}
+.tool-container{padding:1rem}
+.input-group{margin-bottom:1rem}
+.input-group label{display:block;margin-bottom:.5rem;font-weight:600}
+.input-group input{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:4px}
+@media (min-width:768px){.tool-container{max-width:720px;margin:0 auto}.input-group{display:flex;align-items:center}.input-group label{flex:0 0 160px;margin-right:1rem}.input-group input{flex:1}}
