@@ -27,7 +27,7 @@ async function loadHotResources(){
 function onSearch(){
   const q=document.getElementById('search-input').value.trim();
   if(!q) return;
-  const target=`../resources/math-foundations.html?q=${encodeURIComponent(q)}`;
+  const target=`resources/software-tools.html?q=${encodeURIComponent(q)}`;
   location.href=target;
 }
 
