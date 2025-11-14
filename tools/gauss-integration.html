@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>高斯积分点 - 计算力学学习平台</title>
+  <title>高斯积分工具 - 计算力学学习平台</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -92,10 +92,10 @@
           <div class="page-header-content animate-fade-in-up">
             <h1 class="display-5 fw-bold text-white mb-3">
               <i class="bi bi-calculator text-gradient me-3"></i>
-              高斯积分点
+              外部高斯积分工具
             </h1>
             <p class="lead text-white-50 mb-4">
-              生成高斯积分点坐标和权重，支持1-5阶积分，用于有限元数值积分计算
+              集成权威外部资源，快速查找高斯积分点与权重，并支持编程生成
             </p>
             <div class="d-flex gap-3 flex-wrap">
               <a href="../index.html" class="btn btn-outline-light">
@@ -131,47 +131,37 @@
               <div class="text-center mb-4">
                 <h3 class="text-white mb-3">
                   <i class="bi bi-bullseye text-gradient me-2"></i>
-                  高斯积分点生成器
+                  推荐工具
                 </h3>
-                <p class="text-white-50">选择积分阶数，生成对应的高斯积分点和权重</p>
+                <p class="text-white-50">高斯-勒让德节点与权重，以及数值积分库接口</p>
               </div>
               
-              <!-- 参数输入区域 -->
-              <div class="mb-5">
-                <div class="row g-3 align-items-center">
-                  <div class="col-md-4">
-                    <label class="text-white mb-2">维度</label>
-                    <select id="dim" class="form-select tool-input">
-                      <option value="1D" selected>1D</option>
-                      <option value="2D-quad">2D 四边形</option>
-                      <option value="2D-tri">2D 三角形</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="text-white mb-2">阶数</label>
-                    <select id="n" class="form-select tool-input">
-                      <option value="1">1</option>
-                      <option value="2" selected>2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="text-center mt-4">
-                      <span class="badge bg-primary fs-6">阶数: <span id="current-order">2</span></span>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-bullseye text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Pomax 节点权重表</h5>
                     </div>
+                    <div class="text-white-50 mb-3">提供 n=2 到 64 的高斯-勒让德积分点与权重，精度高，直接查询</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://pomax.github.io/bezierinfo/legendre-gauss.html">打开</a>
                   </div>
                 </div>
-              </div>
-              
-              <!-- 结果显示区域 -->
-              <div id="result" class="result-card p-4 rounded-3">
-                <h5 class="text-white mb-3">
-                  <i class="bi bi-list-ol me-2"></i>
-                  积分点与权重
-                </h5>
-                <div id="result-content" class="text-white-50"></div>
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-code text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">NumPy leggauss 接口</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">在 Python 中生成任意阶的节点与权重，适合程序化积分</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://numpy.org/doc/1.21/reference/generated/numpy.polynomial.legendre.leggauss.html">打开</a>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="card result-card p-4 rounded-3">
+                    <div class="text-white-50">区间变换：`∫[a,b] f(x) dx ≈ (b-a)/2 · Σ wᵢ · f((b-a)/2 · ξᵢ + (a+b)/2)`</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -181,41 +171,7 @@
   </div>
   
   <script>
-  function gauss(n){
-    if(n===1) return {p:[0],w:[2]};
-    if(n===2) return {p:[-1/Math.sqrt(3),1/Math.sqrt(3)],w:[1,1]};
-    if(n===3) return {p:[-Math.sqrt(3/5),0,Math.sqrt(3/5)],w:[5/9,8/9,5/9]};
-    if(n===4) return {p:[-0.8611363116,-0.3399810436,0.3399810436,0.8611363116],w:[0.3478548451,0.6521451549,0.6521451549,0.3478548451]};
-    if(n===5) return {p:[-0.9061798459,-0.5384693101,0,0.5384693101,0.9061798459],w:[0.2369268850,0.4786286705,0.5688888889,0.4786286705,0.2369268850]};
-    return {p:[],w:[]};
-  }
-  function dunavant(n){
-    if(n===1) return {p:[[1/3,1/3]],w:[1/2]};
-    if(n===2) return {p:[[1/6,1/6],[2/3,1/6],[1/6,2/3]],w:[1/6,1/6,1/6]};
-    if(n===3) return {p:[[1/3,1/3],[0.2,0.2],[0.6,0.2],[0.2,0.6]],w:[-27/96,25/96,25/96,25/96]};
-    return {p:[],w:[]};
-  }
-
-  function calc(){
-    const dim=document.getElementById('dim').value; const n=parseInt(document.getElementById('n').value,10); document.getElementById('current-order').textContent=n;
-    if(dim==='1D'){
-      const g=gauss(n); if(g.p.length===0){ document.getElementById('result-content').innerHTML='<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>不支持该阶数</div>'; return; }
-      const result=`<div class="integration-table">${g.p.map((x,i)=>`<div class="integration-row p-3"><div class="row align-items-center"><div class="col-2 text-center"><span class="badge bg-primary">${i+1}</span></div><div class="col-5 text-center"><div class="text-white-50 small">积分点</div><div class="text-white fw-bold">${x.toFixed(6)}</div></div><div class="col-5 text-center"><div class="text-white-50 small">权重</div><div class="text-white fw-bold">${g.w[i].toFixed(6)}</div></div></div></div>`).join('')}</div><div class="text-center mt-3"><p class="text-white-50 mb-0"><i class="bi bi-info-circle me-1"></i>∫<sub>-1</sub><sup>1</sup> f(ξ)dξ ≈ Σ wᵢ f(ξᵢ)</p></div>`; document.getElementById('result-content').innerHTML=result; return;
-    }
-    if(dim==='2D-quad'){
-      const g=gauss(n); if(g.p.length===0){ document.getElementById('result-content').innerHTML='<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>不支持该阶数</div>'; return; }
-      const cells=[]; for(let i=0;i<g.p.length;i++) for(let j=0;j<g.p.length;j++) cells.push({xi:g.p[i],eta:g.p[j],w:g.w[i]*g.w[j]});
-      const result=`<div class="integration-table">${cells.map((c,k)=>`<div class="integration-row p-3"><div class="row align-items-center"><div class="col-2 text-center"><span class="badge bg-primary">${k+1}</span></div><div class="col-5 text-center"><div class="text-white-50 small">ξ, η</div><div class="text-white fw-bold">${c.xi.toFixed(6)}, ${c.eta.toFixed(6)}</div></div><div class="col-5 text-center"><div class="text-white-50 small">权重</div><div class="text-white fw-bold">${c.w.toFixed(6)}</div></div></div></div>`).join('')}</div>`; document.getElementById('result-content').innerHTML=result; return;
-    }
-    if(dim==='2D-tri'){
-      const d=dunavant(Math.min(3,n)); if(d.p.length===0){ document.getElementById('result-content').innerHTML='<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>不支持该阶数</div>'; return; }
-      const result=`<div class="integration-table">${d.p.map((p,i)=>`<div class="integration-row p-3"><div class="row align-items-center"><div class="col-2 text-center"><span class="badge bg-primary">${i+1}</span></div><div class="col-5 text-center"><div class="text-white-50 small">ξ, η</div><div class="text-white fw-bold">${p[0].toFixed(6)}, ${p[1].toFixed(6)}</div></div><div class="col-5 text-center"><div class="text-white-50 small">权重</div><div class="text-white fw-bold">${d.w[i].toFixed(6)}</div></div></div></div>`).join('')}</div><div class="text-center mt-3"><p class="text-white-50 mb-0"><i class="bi bi-info-circle me-1"></i>参考三角形面积为 1/2</p></div>`; document.getElementById('result-content').innerHTML=result; return;
-    }
-  }
-  
   function onSearch(){ const s=document.getElementById('search-input').value.trim(); if(s) window.location.href=`../resources/?q=${encodeURIComponent(s)}`; }
-  
-  document.addEventListener('DOMContentLoaded',()=>{ document.getElementById('dim').addEventListener('change',calc); document.getElementById('n').addEventListener('change',calc); calc(); });
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

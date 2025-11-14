@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>形函数生成器 - 计算力学学习平台</title>
+  <title>形函数工具 - 计算力学学习平台</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -94,10 +94,10 @@
           <div class="page-header-content animate-fade-in-up">
             <h1 class="display-5 fw-bold text-white mb-3">
               <i class="bi bi-bezier text-gradient me-3"></i>
-              形函数生成器
+              外部形函数工具与资料
             </h1>
             <p class="lead text-white-50 mb-4">
-              计算1D线性元和2D三角形线性元的形函数值，支持参数化调节
+              提供交互式外部工具与权威资料，涵盖线性/二次形函数与重心坐标
             </p>
             <div class="d-flex gap-3 flex-wrap">
               <a href="../index.html" class="btn btn-outline-light">
@@ -127,73 +127,33 @@
   <div class="main-content-section tool-contrast-dark">
     <div class="container">
       <div class="row g-4">
-        <!-- 1D线性元 -->
-        <div class="col-lg-6">
+        <div class="col-md-6">
           <div class="card tool-card animate-fade-in-up">
             <div class="card-body p-4">
-              <div class="text-center mb-4">
-                <h4 class="text-white mb-3">
-                  <i class="bi bi-graph-up text-gradient me-2"></i>
-                  1D形函数
-                </h4>
-                <p class="text-white-50">支持线性 P1 与二次 P2</p>
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-bezier text-gradient me-2"></i>
+                <h5 class="text-white mb-0">GeoGebra 重心坐标</h5>
               </div>
-
-              <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                  <div class="input-group">
-                    <span class="input-group-text">阶次</span>
-                    <select id="order1d" class="form-select tool-input"><option value="P1" selected>P1</option><option value="P2">P2</option></select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <label class="text-white mb-2">ξ (-1 到 1)</label>
-                  <input id="xi" type="range" min="-1" max="1" value="0" step="0.01" class="form-range range-slider">
-                  <div class="text-center mt-2"><span class="badge bg-primary">ξ = <span id="xi-value">0.00</span></span></div>
-                </div>
-              </div>
-
-              <div class="result-card p-3 rounded-3">
-                <h6 class="text-gradient mb-2">计算结果</h6>
-                <div id="sf1d" class="text-white-50 small"></div>
-              </div>
+              <div class="text-white-50 mb-3">交互式演示三角形的重心坐标（形函数的基础），可拖动顶点与点观察坐标变化</div>
+              <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.geogebra.org/m/ZuvmPjmy">打开</a>
             </div>
           </div>
         </div>
-        
-        <!-- 2D三角形线性元 -->
-        <div class="col-lg-6">
+        <div class="col-md-6">
           <div class="card tool-card animate-fade-in-up" style="animation-delay: 0.1s;">
             <div class="card-body p-4">
-              <div class="text-center mb-4">
-                <h4 class="text-white mb-3">
-                  <i class="bi bi-triangle text-gradient me-2"></i>
-                  2D三角形线性元
-                </h4>
-                <p class="text-white-50">计算2D三角形形函数</p>
+              <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-journal-text text-gradient me-2"></i>
+                <h5 class="text-white mb-0">Kratos 形函数综述</h5>
               </div>
-              
-              <div class="mb-3">
-                <label class="text-white mb-2">参数 ξ (0 到 1)</label>
-                <input id="xi2" type="range" min="0" max="1" value="0.33" step="0.01" class="form-range range-slider">
-                <div class="text-center mt-2">
-                  <span class="badge bg-primary">ξ = <span id="xi2-value">0.33</span></span>
-                </div>
-              </div>
-              
-              <div class="mb-4">
-                <label class="text-white mb-2">参数 η (0 到 1)</label>
-                <input id="eta2" type="range" min="0" max="1" value="0.33" step="0.01" class="form-range range-slider">
-                <div class="text-center mt-2">
-                  <span class="badge bg-primary">η = <span id="eta2-value">0.33</span></span>
-                </div>
-              </div>
-              
-              <div class="result-card p-3 rounded-3">
-                <h6 class="text-gradient mb-2">计算结果</h6>
-                <div id="sftri" class="text-white-50 small"></div>
-              </div>
+              <div class="text-white-50 mb-3">二维形函数的系统化总结，含三角形与四边形，适合查公式与推导</div>
+              <a class="btn btn-primary" target="_blank" rel="noopener" href="https://kratos-wiki.cimne.upc.edu/index.php/Two-dimensional_Shape_Functions">打开</a>
             </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card result-card p-4 rounded-3">
+            <div class="text-white-50">1D 线性元：`N₁=(1-ξ)/2`, `N₂=(1+ξ)/2`；2D 三角形线性元：`N₁=ξ₁`, `N₂=ξ₂`, `N₃=1-ξ₁-ξ₂`</div>
           </div>
         </div>
       </div>
@@ -201,70 +161,10 @@
   </div>
   
   <script>
-  function shape1D_P1(xi){
-    const N1=(1-xi)/2; const N2=(1+xi)/2; const dN1=-0.5; const dN2=0.5; return {N:[N1,N2],dN:[dN1,dN2]};
-  }
-  function shape1D_P2(xi){
-    const N1=xi*(xi-1)/2; const N2=1-xi*xi; const N3=xi*(xi+1)/2; const dN1=(2*xi-1)/2; const dN2=-2*xi; const dN3=(2*xi+1)/2; return {N:[N1,N2,N3],dN:[dN1,dN2,dN3]};
-  }
-  function shapeTri(xi,eta){
-    const z=1-xi-eta; const N1=xi; const N2=eta; const N3=z;
-    return {N:[N1,N2,N3]};
-  }
-  function update1D(){
-    const xi=parseFloat(document.getElementById('xi').value);
-    const ord=document.getElementById('order1d').value;
-    const s=ord==='P2'?shape1D_P2(xi):shape1D_P1(xi);
-    document.getElementById('xi-value').textContent=xi.toFixed(2);
-    if(ord==='P1'){
-      document.getElementById('sf1d').innerHTML=`<div class="row g-2"><div class="col-6"><strong class="text-white">形函数</strong><br>N₁=${s.N[0].toFixed(4)}<br>N₂=${s.N[1].toFixed(4)}</div><div class="col-6"><strong class="text-white">导数</strong><br>dN₁/dξ=${s.dN[0].toFixed(2)}<br>dN₂/dξ=${s.dN[1].toFixed(2)}</div></div>`;
-    } else {
-      document.getElementById('sf1d').innerHTML=`<div class="row g-2"><div class="col-6"><strong class="text-white">形函数</strong><br>N₁=${s.N[0].toFixed(4)}<br>N₂=${s.N[1].toFixed(4)}<br>N₃=${s.N[2].toFixed(4)}</div><div class="col-6"><strong class="text-white">导数</strong><br>dN₁/dξ=${s.dN[0].toFixed(2)}<br>dN₂/dξ=${s.dN[1].toFixed(2)}<br>dN₃/dξ=${s.dN[2].toFixed(2)}</div></div>`;
-    }
-  }
-  function updateTri(){
-    const xi=parseFloat(document.getElementById('xi2').value);
-    const eta=parseFloat(document.getElementById('eta2').value);
-    document.getElementById('xi2-value').textContent = xi.toFixed(2);
-    document.getElementById('eta2-value').textContent = eta.toFixed(2);
-    
-    if(xi+eta>1){
-      document.getElementById('sftri').innerHTML='<div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>超出参考单元范围</div>';
-      return;
-    }
-    const s=shapeTri(xi,eta);
-    document.getElementById('sftri').innerHTML=`
-      <div class="row g-2">
-        <div class="col-4 text-center">
-          <strong class="text-white">N₁</strong><br>
-          <span class="h6 text-gradient">${s.N[0].toFixed(4)}</span>
-        </div>
-        <div class="col-4 text-center">
-          <strong class="text-white">N₂</strong><br>
-          <span class="h6 text-gradient">${s.N[1].toFixed(4)}</span>
-        </div>
-        <div class="col-4 text-center">
-          <strong class="text-white">N₃</strong><br>
-          <span class="h6 text-gradient">${s.N[2].toFixed(4)}</span>
-        </div>
-      </div>
-      <div class="text-center mt-2">
-        <small class="text-white-50">ξ=${xi.toFixed(2)}, η=${eta.toFixed(2)}</small>
-      </div>
-    `;
-  }
-  
   function onSearch() {
-    const searchTerm = document.getElementById('search-input').value.trim();
-    if (searchTerm) {
-      window.location.href = `../resources/?q=${encodeURIComponent(searchTerm)}`;
-    }
+    const s = document.getElementById('search-input').value.trim();
+    if (s) window.location.href = `../resources/?q=${encodeURIComponent(s)}`;
   }
-  
-  document.addEventListener('DOMContentLoaded',()=>{update1D();updateTri(); document.getElementById('order1d').addEventListener('change',update1D);});
-  document.getElementById('xi').addEventListener('input',update1D);
-  document.getElementById('xi2').addEventListener('input',updateTri);
-  document.getElementById('eta2').addEventListener('input',updateTri);
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

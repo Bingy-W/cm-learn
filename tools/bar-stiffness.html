@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>1D杆刚度矩阵 - 计算力学学习平台</title>
+  <title>杆元刚度工具 - 计算力学学习平台</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -88,10 +88,10 @@
           <div class="page-header-content animate-fade-in-up">
             <h1 class="display-5 fw-bold text-white mb-3">
               <i class="bi bi-rulers text-gradient me-3"></i>
-              1D杆刚度矩阵
+              外部杆/梁刚度工具
             </h1>
             <p class="lead text-white-50 mb-4">
-              计算一维杆单元的刚度矩阵，输入弹性模量、截面积和长度参数
+              汇总外部刚度法与有限元计算工具，支持元素刚度、装配与求解
             </p>
             <div class="d-flex gap-3 flex-wrap">
               <a href="../index.html" class="btn btn-outline-light">
@@ -127,68 +127,37 @@
               <div class="text-center mb-4">
                 <h3 class="text-white mb-3">
                   <i class="bi bi-rulers text-gradient me-2"></i>
-                  1D杆装配与求解
+                  推荐工具
                 </h3>
-                <p class="text-white-50">支持多单元装配、边界约束与结点力求解，输出位移与反力</p>
+                <p class="text-white-50">查公式、算刚度、装配矩阵与求解反力</p>
               </div>
-
-              <div class="row g-4 mb-4">
-                <div class="col-md-3">
-                  <div class="input-group">
-                    <span class="input-group-text">E</span>
-                    <input id="E" type="number" class="form-control tool-input" value="200" step="0.1">
-                    <span class="input-group-text">GPa</span>
+              
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-diagram-3 text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Omni Stiffness Matrix</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">计算桁架/梁/框架元素的刚度矩阵，支持局部到全局坐标转换</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.omnicalculator.com/physics/stiffness-matrix">打开</a>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="input-group">
-                    <span class="input-group-text">A</span>
-                    <input id="A" type="number" class="form-control tool-input" value="0.01" step="0.001">
-                    <span class="input-group-text">m²</span>
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-building text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">SkyCiv Stiffness Method</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">刚度法装配与求解教学工具，适合结构力学与有限元入门</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://skyciv.com/quick-calculators/stiffness-method-calculator/">打开</a>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="input-group">
-                    <span class="input-group-text">总长</span>
-                    <input id="L" type="number" class="form-control tool-input" value="1" step="0.1">
-                    <span class="input-group-text">m</span>
+                <div class="col-12">
+                  <div class="card result-card p-4 rounded-3">
+                    <div class="text-white-50">一维杆元素刚度：`k = EA/L`；单元刚度矩阵：`[ [k, -k], [-k, k] ]`；全局装配按共享节点叠加</div>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="input-group">
-                    <span class="input-group-text">单元数</span>
-                    <input id="NE" type="number" class="form-control tool-input" value="2" min="1" step="1">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row g-4 mb-3">
-                <div class="col-md-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="bcL" checked>
-                    <label class="form-check-label text-white-50" for="bcL">左端位移约束</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="bcR">
-                    <label class="form-check-label text-white-50" for="bcR">右端位移约束</label>
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="input-group">
-                    <span class="input-group-text">节点力</span>
-                    <input id="loads" type="text" class="form-control tool-input" placeholder="逗号分隔，共 n+1 项，如 0,1000,0">
-                    <span class="input-group-text">N</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="text-end mb-3">
-                <button class="btn btn-primary" id="btnSolve">装配并求解</button>
-              </div>
-
-              <div id="result" class="result-card p-4 rounded-3">
-                <h5 class="text-white mb-3"><i class="bi bi-graph-up me-2"></i>结果</h5>
-                <div id="result-content" class="text-white-50"></div>
               </div>
             </div>
           </div>
@@ -198,52 +167,9 @@
   </div>
   
   <script>
-  function assembleSolve(){
-    const E=parseFloat(document.getElementById('E').value)*1e9;
-    const A=parseFloat(document.getElementById('A').value);
-    const L=parseFloat(document.getElementById('L').value);
-    const NE=parseInt(document.getElementById('NE').value,10);
-    const nn=NE+1;
-    const Le=L/NE;
-    const k=E*A/Le;
-    const K=[]; for(let i=0;i<nn;i++){ const r=[]; for(let j=0;j<nn;j++) r.push(0); K.push(r); }
-    for(let e=0;e<NE;e++){
-      K[e][e]+=k; K[e][e+1]+=-k; K[e+1][e]+=-k; K[e+1][e+1]+=k;
-    }
-    let f=new Array(nn).fill(0);
-    const loadsStr=document.getElementById('loads').value.trim();
-    if(loadsStr){ const parts=loadsStr.split(',').map(s=>parseFloat(s.trim())); for(let i=0;i<Math.min(nn,parts.length);i++) f[i]=isNaN(parts[i])?0:parts[i]; }
-    const bc=[]; if(document.getElementById('bcL').checked) bc.push(0); if(document.getElementById('bcR').checked) bc.push(nn-1);
-    const free=[]; for(let i=0;i<nn;i++) if(bc.indexOf(i)<0) free.push(i);
-    const Kr=[]; const fr=[];
-    for(let i=0;i<free.length;i++){ const r=[]; for(let j=0;j<free.length;j++) r.push(K[free[i]][free[j]]); Kr.push(r); fr.push(f[free[i]]); }
-    const ur=solveLinear(Kr,fr);
-    const u=new Array(nn).fill(0); for(let i=0;i<free.length;i++) u[free[i]]=ur[i];
-    const R=[]; for(let b of bc){ let s=0; for(let j=0;j<nn;j++) s+=K[b][j]*u[j]; R.push(s-f[b]); }
-    const outK=K.map(r=>"["+r.map(x=>x.toExponential(4)).join(", ")+"]").join("<br>");
-    const outU=u.map(x=>x.toFixed(6)).join(", ");
-    const outR=R.map(x=>x.toFixed(6)).join(", ");
-    const html=`<div class="row g-3"><div class="col-md-6"><h6 class="text-gradient mb-2">全局刚度矩阵</h6><div class="text-white">${outK}</div></div><div class="col-md-6"><h6 class="text-gradient mb-2">结果</h6><div class="text-white">结点位移：${outU}<br>约束反力：${outR}<br>单元刚度系数：${(k/1e6).toFixed(2)} MN/m</div></div></div>`;
-    document.getElementById('result-content').innerHTML=html;
-  }
-
-  function solveLinear(A,b){
-    const n=A.length; const M=A.map((r,i)=>r.concat([b[i]]));
-    for(let i=0;i<n;i++){
-      let p=i; for(let r=i;r<n;r++) if(Math.abs(M[r][i])>Math.abs(M[p][i])) p=r;
-      if(Math.abs(M[p][i])<1e-12) return new Array(n).fill(0);
-      if(p!==i){ const t=M[i]; M[i]=M[p]; M[p]=t; }
-      const piv=M[i][i]; for(let c=i;c<=n;c++) M[i][c]/=piv;
-      for(let r=0;r<n;r++) if(r!==i){ const f=M[r][i]; for(let c=i;c<=n;c++) M[r][c]-=f*M[i][c]; }
-    }
-    const x=new Array(n).fill(0); for(let i=0;i<n;i++) x[i]=M[i][n]; return x;
-  }
-
   function onSearch(){
     const s=document.getElementById('search-input').value.trim(); if(s) window.location.href=`../resources/?q=${encodeURIComponent(s)}`;
   }
-
-  document.addEventListener('DOMContentLoaded',()=>{ document.getElementById('btnSolve').addEventListener('click',assembleSolve); assembleSolve(); });
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

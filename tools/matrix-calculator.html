@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>矩阵计算器 - 计算力学学习平台</title>
+  <title>矩阵工具合集 - 计算力学学习平台</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -83,10 +83,10 @@
           <div class="page-header-content animate-fade-in-up">
             <h1 class="display-5 fw-bold text-white mb-3">
               <i class="bi bi-calculator text-gradient me-3"></i>
-              矩阵计算器
+              外部矩阵工具合集
             </h1>
             <p class="lead text-white-50 mb-4">
-              计算2×2矩阵的行列式、迹、特征值和逆矩阵，支持实时计算和结果展示
+              集成高质量外部矩阵工具，支持行列式、逆、秩、特征值等
             </p>
             <div class="d-flex gap-3 flex-wrap">
               <a href="../index.html" class="btn btn-outline-light">
@@ -122,40 +122,51 @@
               <div class="text-center mb-4">
                 <h3 class="text-white mb-3">
                   <i class="bi bi-grid-3x3-gap-fill text-gradient me-2"></i>
-                  矩阵计算器
+                  推荐工具
                 </h3>
-                <p class="text-white-50">支持 2×2 至 5×5，计算行列式、迹、转置、逆矩阵与秩</p>
+                <p class="text-white-50">精选稳定、功能完善的第三方矩阵计算工具</p>
               </div>
-
-              <div class="row g-4 mb-4">
-                <div class="col-md-4">
-                  <div class="input-group">
-                    <span class="input-group-text bg-transparent text-white border-secondary">尺寸</span>
-                    <select id="size" class="form-select matrix-input">
-                      <option value="2">2×2</option>
-                      <option value="3" selected>3×3</option>
-                      <option value="4">4×4</option>
-                      <option value="5">5×5</option>
-                    </select>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-calculator text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Matrix Calculator</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">支持行列式、逆、秩、特征值、矩阵乘法等常用运算</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://matrixcalc.org/">打开</a>
                   </div>
                 </div>
-                <div class="col-md-8 text-end">
-                  <div class="btn-group">
-                    <button class="btn btn-light" id="btn-clear">清空</button>
-                    <button class="btn btn-light" id="btn-random">随机</button>
-                    <button class="btn btn-primary" id="btn-calc">计算</button>
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-arrow-repeat text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Reshish Inverse</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">高斯-约当法求逆矩阵，含步骤展示与不可逆判断</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://matrix.reshish.com/inverse-matrix/">打开</a>
                   </div>
                 </div>
-              </div>
-
-              <div id="matrix-grid" class="mb-4"></div>
-
-              <div id="matrix-results" class="result-card p-4 rounded-3">
-                <h5 class="text-white mb-3">
-                  <i class="bi bi-graph-up me-2"></i>
-                  计算结果
-                </h5>
-                <div id="matrix-result" class="text-white-50"></div>
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-diagram-2 text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Symbolab 特征值</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">求解矩阵特征值与特征向量，支持步骤和多分解</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.symbolab.com/solver/matrix-eigenvalues-calculator">打开</a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card result-card p-4 rounded-3 h-100">
+                    <div class="d-flex align-items-center mb-3">
+                      <i class="bi bi-lightning-charge text-gradient me-2"></i>
+                      <h5 class="text-white mb-0">Wolfram Alpha</h5>
+                    </div>
+                    <div class="text-white-50 mb-3">矩阵相关计算入口，支持一步式输入与可视化</div>
+                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.wolframalpha.com/calculators/eigenvalue-calculator">打开</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -165,133 +176,9 @@
   </div>
   
   <script>
-  function createGrid(n){
-    const grid=document.getElementById('matrix-grid');
-    const rows=[];
-    for(let i=0;i<n;i++){
-      const cols=[];
-      for(let j=0;j<n;j++){
-        cols.push(`<div class="col"><input type="number" step="0.1" class="form-control matrix-input" id="m_${i}_${j}" value="${i===j?1:0}"></div>`);
-      }
-      rows.push(`<div class="row g-2 mb-2">${cols.join('')}</div>`);
-    }
-    grid.innerHTML=rows.join('');
-  }
-
-  function readMatrix(n){
-    const A=[];
-    for(let i=0;i<n;i++){
-      const r=[];
-      for(let j=0;j<n;j++){
-        const v=parseFloat(document.getElementById(`m_${i}_${j}`).value);
-        r.push(isNaN(v)?0:v);
-      }
-      A.push(r);
-    }
-    return A;
-  }
-
-  function clone(A){
-    return A.map(r=>r.slice());
-  }
-
-  function detGaussian(A){
-    const n=A.length; const M=clone(A); let d=1; let s=1;
-    for(let i=0;i<n;i++){
-      let p=i;
-      for(let r=i;r<n;r++) if(Math.abs(M[r][i])>Math.abs(M[p][i])) p=r;
-      if(Math.abs(M[p][i])<1e-12) return 0;
-      if(p!==i){ const tmp=M[i]; M[i]=M[p]; M[p]=tmp; s*=-1; }
-      d*=M[i][i];
-      for(let r=i+1;r<n;r++){
-        const f=M[r][i]/M[i][i];
-        for(let c=i;c<n;c++) M[r][c]-=f*M[i][c];
-      }
-    }
-    return s*d;
-  }
-
-  function inverseGaussJordan(A){
-    const n=A.length; const M=clone(A); const I=[]; for(let i=0;i<n;i++){ const r=[]; for(let j=0;j<n;j++) r.push(i===j?1:0); I.push(r); }
-    for(let i=0;i<n;i++){
-      let p=i;
-      for(let r=i;r<n;r++) if(Math.abs(M[r][i])>Math.abs(M[p][i])) p=r;
-      if(Math.abs(M[p][i])<1e-12) return null;
-      if(p!==i){ const t=M[i]; M[i]=M[p]; M[p]=t; const ti=I[i]; I[i]=I[p]; I[p]=ti; }
-      const piv=M[i][i];
-      for(let c=0;c<n;c++){ M[i][c]/=piv; I[i][c]/=piv; }
-      for(let r=0;r<n;r++) if(r!==i){ const f=M[r][i]; for(let c=0;c<n;c++){ M[r][c]-=f*M[i][c]; I[r][c]-=f*I[i][c]; } }
-    }
-    return I;
-  }
-
-  function transpose(A){
-    const n=A.length; const T=[]; for(let i=0;i<n;i++){ const r=[]; for(let j=0;j<n;j++) r.push(A[j][i]); T.push(r); } return T;
-  }
-
-  function trace(A){
-    let t=0; for(let i=0;i<A.length;i++) t+=A[i][i]; return t;
-  }
-
-  function rankRREF(A){
-    const M=clone(A); const n=M.length; const m=M[0].length; let r=0; let c=0;
-    while(r<n && c<m){ let p=r; for(let i=r;i<n;i++) if(Math.abs(M[i][c])>Math.abs(M[p][c])) p=i; if(Math.abs(M[p][c])<1e-12){ c++; continue; }
-      const t=M[r]; M[r]=M[p]; M[p]=t; const piv=M[r][c]; for(let j=c;j<m;j++) M[r][j]/=piv; for(let i=0;i<n;i++) if(i!==r){ const f=M[i][c]; for(let j=c;j<m;j++) M[i][j]-=f*M[r][j]; }
-      r++; c++;
-    }
-    return r;
-  }
-
-  function fmt(x){
-    return Math.abs(x)<1e-10?"0":(+x).toFixed(6);
-  }
-
-  function renderMatrix(title,A){
-    return `<div class="mb-3"><h6 class="text-gradient mb-2">${title}</h6>${A?(`<div class="text-white">${A.map(r=>"["+r.map(fmt).join(", ")+"]").join("<br>")}</div>`):'<div class="text-white-50">不可逆</div>'}</div>`;
-  }
-
-  function calc(){
-    const n=parseInt(document.getElementById('size').value,10);
-    const A=readMatrix(n);
-    const d=detGaussian(A);
-    const t=trace(A);
-    const T=transpose(A);
-    const inv=inverseGaussJordan(A);
-    const rk=rankRREF(A);
-    const eig=(n===2)?(function(){ const tr=A[0][0]+A[1][1]; const dt=A[0][0]*A[1][1]-A[0][1]*A[1][0]; const ds=tr*tr-4*dt; if(ds>=0){ const s=Math.sqrt(ds); return [ (tr+s)/2, (tr-s)/2 ].map(fmt).join(', ');} return '复数特征值'; })():"仅支持2×2";
-    const res=`<div class="row g-3">
-      <div class="col-md-6">${renderMatrix('原矩阵',A)}</div>
-      <div class="col-md-6">${renderMatrix('转置矩阵',T)}</div>
-      <div class="col-md-6">${renderMatrix('逆矩阵',inv)}</div>
-      <div class="col-md-6"><h6 class="text-gradient mb-2">标量量</h6><div class="text-white">行列式：${fmt(d)}<br>迹：${fmt(t)}<br>秩：${rk}<br>特征值：${eig}</div></div>
-    </div>`;
-    document.getElementById('matrix-result').innerHTML=res;
-  }
-
-  function clearGrid(){
-    const n=parseInt(document.getElementById('size').value,10);
-    for(let i=0;i<n;i++) for(let j=0;j<n;j++) document.getElementById(`m_${i}_${j}`).value=0;
-  }
-
-  function randomGrid(){
-    const n=parseInt(document.getElementById('size').value,10);
-    for(let i=0;i<n;i++) for(let j=0;j<n;j++) document.getElementById(`m_${i}_${j}`).value=(Math.random()*4-2).toFixed(2);
-  }
-
-  function init(){
-    createGrid(parseInt(document.getElementById('size').value,10));
-    calc();
-    document.getElementById('size').addEventListener('change',()=>{ createGrid(parseInt(document.getElementById('size').value,10)); });
-    document.getElementById('btn-clear').addEventListener('click',()=>{ clearGrid(); });
-    document.getElementById('btn-random').addEventListener('click',()=>{ randomGrid(); });
-    document.getElementById('btn-calc').addEventListener('click',()=>{ calc(); });
-  }
-
   function onSearch(){
     const s=document.getElementById('search-input').value.trim(); if(s) window.location.href=`../resources/?q=${encodeURIComponent(s)}`;
   }
-
-  document.addEventListener('DOMContentLoaded',init);
   </script>
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
