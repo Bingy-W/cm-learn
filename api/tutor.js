@@ -38,10 +38,24 @@ function pickTools(q){
   return list
 }
 
-async function callOpenAI({ message, mode, level, profile }) {
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) {
-    return { error: 'missing_openai_key' }
+function getProviderConfig(){
+  const provider=(process.env.AI_PROVIDER||'openai').toLowerCase()
+  if(provider==='deepseek'){
+    const apiKey=process.env.DEEPSEEK_API_KEY
+    const base=process.env.DEEPSEEK_API_BASE||'https://api.deepseek.com/v1/chat/completions'
+    const model=process.env.DEEPSEEK_MODEL||'deepseek-chat'
+    return { provider, apiKey, base, model }
+  }
+  const apiKey=process.env.OPENAI_API_KEY
+  const base=process.env.OPENAI_API_BASE||'https://api.openai.com/v1/chat/completions'
+  const model=process.env.OPENAI_MODEL||'gpt-4o-mini'
+  return { provider:'openai', apiKey, base, model }
+}
+
+async function callModel({ message, mode, level, profile }) {
+  const cfg=getProviderConfig()
+  if (!cfg.apiKey) {
+    return { error: 'missing_api_key', provider: cfg.provider }
   }
   const system = [
     '你是一名计算力学入门教师，使用中文进行讲解。',
@@ -57,14 +71,14 @@ async function callOpenAI({ message, mode, level, profile }) {
     content: JSON.stringify({ message, mode, level, profile })
   }
 
-  const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+  const resp = await fetch(cfg.base, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
+      'Authorization': `Bearer ${cfg.apiKey}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'gpt-4o-mini',
+      model: cfg.model,
       temperature: 0.2,
       messages: [
         { role: 'system', content: system },
@@ -75,7 +89,7 @@ async function callOpenAI({ message, mode, level, profile }) {
 
   if (!resp.ok) {
     const txt = await resp.text().catch(() => '')
-    return { error: 'openai_request_failed', details: txt }
+    return { error: 'provider_request_failed', provider: cfg.provider, details: txt }
   }
   const data = await resp.json()
   const content = data?.choices?.[0]?.message?.content || ''
@@ -99,7 +113,7 @@ export default async function handler(req, res) {
       return
     }
     const resources = loadResources()
-    const result = await callOpenAI({ message, mode, level, profile })
+    const result = await callModel({ message, mode, level, profile })
     if (result?.error) {
       res.status(500).json(result)
       return
