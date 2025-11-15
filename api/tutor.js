@@ -39,7 +39,7 @@ function pickTools(q){
 }
 
 function getProviderConfig(){
-  const provider=(process.env.AI_PROVIDER||'openai').toLowerCase()
+  const provider=(process.env.AI_PROVIDER||'deepseek').toLowerCase()
   if(provider==='deepseek'){
     const apiKey=process.env.DEEPSEEK_API_KEY
     const base=process.env.DEEPSEEK_API_BASE||'https://api.deepseek.com/v1/chat/completions'
