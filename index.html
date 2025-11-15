@@ -82,11 +82,7 @@
             </ul>
           </li>
         </ul>
-        <div class="d-flex">
-          <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#tutorCanvas" aria-controls="tutorCanvas">
-            <i class="bi bi-chat-dots"></i> 学习助手
-          </button>
-        </div>
+        
       </div>
     </div>
   </nav>
@@ -211,37 +207,8 @@
     </div>
   </section>
 
-  <!-- 学习助手侧边面板 -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="tutorCanvas" aria-labelledby="tutorCanvasLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="tutorCanvasLabel">学习助手（初学者模式）</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body d-flex flex-column" style="height: 100%;">
-      <div class="mb-2 d-flex gap-2 align-items-center">
-        <select id="tutor-mode" class="form-select form-select-sm" style="width: 160px;">
-          <option value="ask">提问</option>
-          <option value="plan">学习路径</option>
-          <option value="practice">练习</option>
-        </select>
-        <select id="tutor-level" class="form-select form-select-sm" style="width: 120px;">
-          <option value="beginner">入门</option>
-          <option value="advanced">进阶</option>
-        </select>
-      </div>
-      <div id="tutor-messages" class="flex-grow-1 overflow-auto border rounded p-2" style="min-height: 240px; background: #fff;"></div>
-      <div class="mt-2">
-        <div class="input-group">
-          <input id="tutor-input" type="text" class="form-control" placeholder="请输入你的问题或主题，如：一维杆单元刚度推导">
-          <button id="tutor-send" class="btn btn-primary"><i class="bi bi-send"></i> 发送</button>
-        </div>
-        <div id="tutor-hint" class="form-text">回答将以“诊断→提示→讲解→练习→参考资料”的结构呈现</div>
-      </div>
-    </div>
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/tutor.js"></script>
 </body>
 </html>
