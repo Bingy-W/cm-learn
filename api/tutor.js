@@ -46,6 +46,11 @@ function getProviderConfig(){
     const model=process.env.DEEPSEEK_MODEL||'deepseek-chat'
     return { provider, apiKey, base, model }
   }
+  if(provider==='local'){
+    const base=process.env.LOCAL_API_BASE||'http://localhost:8000/v1/chat/completions'
+    const model=process.env.LOCAL_MODEL||'qwen2.5-7b-instruct'
+    return { provider:'local', apiKey: undefined, base, model }
+  }
   const apiKey=process.env.OPENAI_API_KEY
   const base=process.env.OPENAI_API_BASE||'https://api.openai.com/v1/chat/completions'
   const model=process.env.OPENAI_MODEL||'gpt-4o-mini'
@@ -54,7 +59,7 @@ function getProviderConfig(){
 
 async function callModel({ message, mode, level, profile }) {
   const cfg=getProviderConfig()
-  if (!cfg.apiKey) {
+  if (!cfg.apiKey && cfg.provider!=='local') {
     return { error: 'missing_api_key', provider: cfg.provider }
   }
   const system = [
@@ -74,7 +79,7 @@ async function callModel({ message, mode, level, profile }) {
   const resp = await fetch(cfg.base, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${cfg.apiKey}`,
+      ...(cfg.apiKey ? { 'Authorization': `Bearer ${cfg.apiKey}` } : {}),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
