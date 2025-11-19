@@ -867,3 +867,42 @@ html {
 .difficulty-indicator {
   font-size: 0.9rem;
 }
+:root {
+  --journal-blue: #003366;
+  --journal-accent: #0056b3;
+  --journal-light: #F0F4F8;
+  --journal-text: #1a202c;
+}
+
+::selection {
+  background: var(--journal-blue);
+  color: #ffffff;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(240,244,248,0.6), rgba(240,244,248,0.2), rgba(240,244,248,0.6));
+  pointer-events: none;
+}
+
+.hero-section h1,
+.page-header-section h1,
+.page-header-section h2,
+.hot-resources-title,
+.features-section h2 {
+  font-family: 'Noto Serif SC', serif;
+  letter-spacing: 0;
+}
+
+.features-section h2 {
+  font-weight: 700;
+}
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 51, 102, 0.35);
+}
